@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "plugins": [
+    {
+      "id": "superproductivity-shell",
+      "name": "SuperProductivity-shell",
+      "version": "0.0.1",
+      "official": false,
+      "author": "Dastan Medetbekov",
+      "description": "Integration with SuperProductivity for task management inside Noctalia Shell.",
+      "repository": "https://github.com/Dastan/superprod_shell",
+      "license": "GPL-3.0",
+      "tags": [
+        "Productivity",
+        "Bar"
+      ],
+      "lastUpdated": "2026-05-04T12:00:00Z"
+    }
+  ]
+}

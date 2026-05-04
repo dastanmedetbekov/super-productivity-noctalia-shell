@@ -2,7 +2,7 @@
   "id": "superproductivity-shell",
   "name": "SuperProductivity-shell",
   "version": "0.0.1",
-  "minNoctaliaVersion": "4.6.6",
+  "minNoctaliaVersion": "1.0.0",
   "author": "Dastan Medetbekov",
   "official": false,
   "license": "GPL-3.0",

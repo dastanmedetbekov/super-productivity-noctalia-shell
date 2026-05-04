@@ -6,7 +6,7 @@ Item {
   property var pluginApi: null
 
   IpcHandler {
-    target: "plugin:superproductivity"
+    target: "plugin:superproductivity-shell"
     function toggle() {
       if (pluginApi) {
         pluginApi.withCurrentScreen(screen => {
