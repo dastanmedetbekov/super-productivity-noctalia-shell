@@ -8,7 +8,7 @@
       "official": false,
       "author": "Dastan Medetbekov",
       "description": "Integration with SuperProductivity for task management inside Noctalia Shell.",
-      "repository": "https://github.com/Dastan/superprod_shell",
+      "repository": "https://github.com/dastanmedetbekov/super-productivity-noctalia-shell",
       "license": "GPL-3.0",
       "tags": [
         "Productivity",
