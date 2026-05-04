@@ -1,11 +1,11 @@
 {
-  "id": "superproductivity",
-  "name": "SuperProductivity",
-  "version": "1.0.0",
+  "id": "superproductivity-shell",
+  "name": "SuperProductivity-shell",
+  "version": "0.0.1",
   "minNoctaliaVersion": "4.6.6",
-  "author": "You",
+  "author": "Dastan Medetbekov",
   "official": false,
-  "license": "MIT",
+  "license": "GPL-3.0",
   "description": "Integration with SuperProductivity for task management inside Noctalia Shell.",
   "tags": [
     "Productivity"
