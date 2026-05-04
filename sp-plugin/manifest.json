@@ -1,0 +1,8 @@
+{
+  "id": "shell-bridge",
+  "name": "Shell Bridge",
+  "description": "Exposes an HTTP server to allow external Shell like Noctalia to interact with SuperProductivity tasks",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "author": "Dastan"
+}

@@ -3,6 +3,8 @@ import Quickshell.Io
 import qs.Commons
 import qs.Services.UI
 import qs.Widgets
+import QtQml.Models
+import QtQuick
 
 NIconButton {
   id: root
@@ -20,7 +22,7 @@ NIconButton {
 
   readonly property string iconColorKey: cfg.iconColor ?? defaults.iconColor
   
-  property string currentTaskText: "SP"
+  property string currentTaskText: "SuperProductivity"
 
   icon: "check-circle"
   tooltipText: currentTaskText
@@ -34,12 +36,57 @@ NIconButton {
   border.color: Style.capsuleBorderColor
   border.width: Style.capsuleBorderWidth
 
-  // We could add a Process element to call `superproductivity-cli`
-  // Process { ... }
+  Timer {
+      id: pollTimer
+      interval: 5000
+      running: true
+      repeat: true
+      onTriggered: {
+          fetchActiveTask();
+      }
+  }
+
+  Component.onCompleted: {
+      fetchActiveTask();
+  }
+
+  function fetchActiveTask() {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://127.0.0.1:30142/current-task");
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  try {
+                      var data = JSON.parse(xhr.responseText);
+                      if (data && data.title) {
+                          root.currentTaskText = data.title;
+                      } else {
+                          root.currentTaskText = "No active task";
+                      }
+                  } catch(e) {
+                      root.currentTaskText = "Error parsing data";
+                  }
+              } else {
+                  root.currentTaskText = "SP Not Running";
+              }
+          }
+      };
+      xhr.send();
+  }
+
+  function postAction(endpoint) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://127.0.0.1:30142/" + endpoint);
+      xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              fetchActiveTask();
+          }
+      };
+      xhr.send();
+  }
 
   onClicked: {
-    // Just a placeholder action. Here we could invoke CLI command to launch SuperProductivity
-    ToastService.showNotice("SuperProductivity clicked!");
+      postAction("toggle-timer");
   }
 
   NPopupContextMenu {
@@ -62,9 +109,9 @@ NIconButton {
       contextMenu.close();
       PanelService.closeContextMenu(screen);
       if (action === "done") {
-        ToastService.showNotice("Task marked as done");
+        postAction("mark-done");
       } else if (action === "timer") {
-        ToastService.showNotice("Timer toggled");
+        postAction("toggle-timer");
       }
     }
   }
