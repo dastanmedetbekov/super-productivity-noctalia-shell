@@ -1,8 +1,13 @@
 {
-  "id": "shell-bridge",
   "name": "Shell Bridge",
-  "description": "Exposes an HTTP server to allow external Shell like Noctalia to interact with SuperProductivity tasks",
+  "id": "shell-bridge",
+  "manifestVersion": 1,
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "author": "Dastan"
+  "minSupVersion": "8.0.0",
+  "description": "Exposes an HTTP server to allow external Shell like Noctalia to interact with SuperProductivity tasks",
+  "author": "Dastan",
+  "hooks": ["taskUpdate", "currentTaskChange", "action"],
+  "permissions": ["getTasks", "showSnack"],
+  "type": "standard",
+  "isSkipMenuEntry": true
 }

@@ -2,14 +2,15 @@
   "name": "sp-plugin",
   "version": "1.0.0",
   "description": "SuperProductivity Bridge",
-  "main": "dist/index.js",
+  "main": "plugin.js",
+  "license": "GPL-3.0",
   "scripts": {
     "build": "tsc"
   },
   "devDependencies": {
     "@super-productivity/plugin-api": "^1.0.1",
-    "@types/node": "^20.19.39",
-    "tslib": "^2.8.1",
-    "typescript": "^5.0.0"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tslib": "^2.8.1"
   }
 }

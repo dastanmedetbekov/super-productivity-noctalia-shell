@@ -36,6 +36,12 @@ NIconButton {
   border.color: Style.capsuleBorderColor
   border.width: Style.capsuleBorderWidth
 
+  Process {
+      id: daemonProcess
+      command: ["python3", pluginApi ? (pluginApi.pluginPath + "/daemon.py") : ""]
+      running: true
+  }
+
   Timer {
       id: pollTimer
       interval: 5000
