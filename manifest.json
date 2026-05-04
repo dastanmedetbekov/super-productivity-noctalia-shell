@@ -1,0 +1,25 @@
+{
+  "id": "superproductivity",
+  "name": "SuperProductivity",
+  "version": "1.0.0",
+  "minNoctaliaVersion": "4.6.6",
+  "author": "You",
+  "official": false,
+  "license": "MIT",
+  "description": "Integration with SuperProductivity for task management inside Noctalia Shell.",
+  "tags": [
+    "Productivity"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "iconColor": "primary"
+    }
+  }
+}
