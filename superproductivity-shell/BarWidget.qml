@@ -56,6 +56,15 @@ NIconButton {
       fetchActiveTask();
   }
 
+  function formatTime(ms) {
+      if (!ms) return "";
+      var totalSeconds = Math.floor(ms / 1000);
+      var hours = Math.floor(totalSeconds / 3600);
+      var minutes = Math.floor((totalSeconds % 3600) / 60);
+      if (hours > 0) return hours + "h " + minutes + "m";
+      return minutes + "m";
+  }
+
   function fetchActiveTask() {
       var xhr = new XMLHttpRequest();
       xhr.open("GET", "http://127.0.0.1:30142/current-task");
@@ -65,7 +74,14 @@ NIconButton {
                   try {
                       var data = JSON.parse(xhr.responseText);
                       if (data && data.title) {
-                          root.currentTaskText = data.title;
+                          var text = data.title;
+                          if (data.timeSpent > 0 || data.timeEstimate > 0) {
+                              var spent = formatTime(data.timeSpent);
+                              var est = formatTime(data.timeEstimate);
+                              if (est) text += " [" + spent + " / " + est + "]";
+                              else if (spent) text += " [" + spent + "]";
+                          }
+                          root.currentTaskText = text;
                       } else {
                           root.currentTaskText = "No active task";
                       }

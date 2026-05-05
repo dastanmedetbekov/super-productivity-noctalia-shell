@@ -41,18 +41,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if self.path == '/set-task':
             try:
                 state['task'] = json.loads(post_data)
-                print(f"[DEBUG] /set-task received JSON data: {state['task']}", flush=True)
             except Exception as e:
-                print(f"[ERROR] /set-task failed to parse JSON data: {e}", flush=True)
+                pass
         elif self.path == '/debug':
-            print(f"[DEBUG] /debug received: {post_data.decode()}", flush=True)
             with open('/tmp/sp-debug.log', 'a') as f:
                 f.write(post_data.decode() + '\n')
         elif self.path == '/toggle-timer':
-            print("[DEBUG] /toggle-timer pending action set", flush=True)
             state['pending_action'] = 'toggle'
         elif self.path == '/mark-done':
-            print("[DEBUG] /mark-done pending action set", flush=True)
             state['pending_action'] = 'done'
             
         self.wfile.write(b'{"status":"ok"}')
@@ -64,11 +60,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
 
-    # Use default logging to see all requests in terminal
-    # def log_message(self, format, *args):
-    #     pass # suppress console logging
+    # Disable spamming logs completely now that it's working
+    def log_message(self, format, *args):
+        pass
 
-print(f"Noctalia <-> SuperProductivity bridge starting on port {PORT}...", flush=True)
+print(f"Noctalia <-> SuperProductivity bridge starting on port {PORT}...")
 
 socketserver.TCPServer.allow_reuse_address = True
 with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
