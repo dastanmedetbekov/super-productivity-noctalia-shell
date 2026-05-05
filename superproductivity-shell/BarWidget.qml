@@ -38,7 +38,7 @@ NIconButton {
 
   Process {
       id: daemonProcess
-      command: ["python3", Qt.resolvedUrl("daemon.py").toString().replace("file://", "")]
+      command: ["bash", "-c", "python3 \"$1\" > /tmp/sp-daemon.log 2>&1", "--", Qt.resolvedUrl("daemon.py").toString().replace("file://", "")]
       running: true
   }
 
@@ -73,7 +73,7 @@ NIconButton {
                       root.currentTaskText = "Error parsing data";
                   }
               } else {
-                  root.currentTaskText = "SP Not Running";
+                  root.currentTaskText = "SP Dead (path: " + Qt.resolvedUrl("daemon.py").toString().replace("file://", "") + ")";
               }
           }
       };
