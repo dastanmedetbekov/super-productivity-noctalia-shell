@@ -1,7 +1,15 @@
 console.log('Shell Bridge Plugin initializing...');
 
-let currentTaskId = null;
 const DAEMON_URL = "http://127.0.0.1:30142";
+
+// Send debug info about PluginAPI
+fetch(`${DAEMON_URL}/debug`, {
+    method: "POST",
+    body: JSON.stringify({ pluginApiKeys: Object.keys(PluginAPI) })
+}).catch(e=>e);
+
+let currentTaskId = null;
+let currentTaskTitle = "No active task";
 
 async function syncTask() {
     try {
@@ -19,6 +27,8 @@ async function syncTask() {
 }
 
 PluginAPI.registerHook('action', (action) => {
+    fetch(`${DAEMON_URL}/debug`, { method: "POST", body: JSON.stringify({ actionType: action?.type, payload: action?.payload }) }).catch(e=>e);
+
     if (action?.type === '[Task] SetCurrentTask') {
         currentTaskId = action.payload;
         syncTask();

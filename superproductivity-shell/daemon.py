@@ -43,6 +43,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 state['task'] = json.loads(post_data)
             except Exception as e:
                 pass
+        elif self.path == '/debug':
+            with open('/tmp/sp-debug.log', 'a') as f:
+                f.write(post_data.decode() + '\n')
         elif self.path == '/toggle-timer':
             state['pending_action'] = 'toggle'
         elif self.path == '/mark-done':
@@ -61,6 +64,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         pass # suppress console logging
 
 print(f"Noctalia <-> SuperProductivity bridge running on port {PORT}")
+
+socketserver.TCPServer.allow_reuse_address = True
 with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
     try:
         httpd.serve_forever()
