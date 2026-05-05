@@ -28,6 +28,9 @@ async function syncTask() {
 }
 
 PluginAPI.registerHook('currentTaskChange', (task) => {
+    console.log("shell bridge init");
+    console.log("shell bridge init - task:", task);
+    
     fetch(`${DAEMON_URL}/debug`, { method: "POST", body: "HOOK currentTaskChange: " + (task ? task.title : "null") }).catch(e=>e);
 
     currentTaskId = task ? task.id : null;
