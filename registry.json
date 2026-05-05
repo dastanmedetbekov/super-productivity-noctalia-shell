@@ -4,7 +4,7 @@
     {
       "id": "superproductivity-shell",
       "name": "SuperProductivity-shell",
-      "version": "0.0.2",
+      "version": "0.0.1",
       "official": false,
       "author": "Dastan Medetbekov",
       "description": "Integration with SuperProductivity for task management inside Noctalia Shell.",
