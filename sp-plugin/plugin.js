@@ -5,7 +5,7 @@ const DAEMON_URL = "http://127.0.0.1:30142";
 // Send debug info about PluginAPI
 fetch(`${DAEMON_URL}/debug`, {
     method: "POST",
-    body: JSON.stringify({ pluginApiKeys: Object.keys(PluginAPI) })
+    body: "PluginAPI Keys: " + Object.keys(PluginAPI).join(",")
 }).catch(e=>e);
 
 let currentTaskId = null;
@@ -27,7 +27,7 @@ async function syncTask() {
 }
 
 PluginAPI.registerHook('action', (action) => {
-    fetch(`${DAEMON_URL}/debug`, { method: "POST", body: JSON.stringify({ actionType: action?.type, payload: action?.payload }) }).catch(e=>e);
+    fetch(`${DAEMON_URL}/debug`, { method: "POST", body: "HOOK FIRED: " + (action ? action.type : "unknown") }).catch(e=>e);
 
     if (action?.type === '[Task] SetCurrentTask') {
         currentTaskId = action.payload;
@@ -37,6 +37,13 @@ PluginAPI.registerHook('action', (action) => {
 
 // Periodic sync and action polling
 setInterval(async () => {
+    try {
+        const tasks = await PluginAPI.getTasks();
+        fetch(`${DAEMON_URL}/debug`, { method: "POST", body: "POLL: Task count " + (tasks ? tasks.length : "null") }).catch(e=>e);
+    } catch(e) {
+        fetch(`${DAEMON_URL}/debug`, { method: "POST", body: "POLL ERROR: " + String(e) }).catch(e=>e);
+    }
+    
     syncTask();
     try {
         const res = await fetch(`${DAEMON_URL}/get-action`);
