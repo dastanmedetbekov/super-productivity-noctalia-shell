@@ -38,7 +38,7 @@ NIconButton {
 
   Process {
       id: daemonProcess
-      command: ["python3", pluginApi ? (pluginApi.pluginPath + "/daemon.py") : ""]
+      command: ["python3", Qt.resolvedUrl("daemon.py").toString().replace("file://", "")]
       running: true
   }
 
