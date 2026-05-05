@@ -1,7 +1,7 @@
 {
   "id": "superproductivity-shell",
   "name": "SuperProductivity-shell",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minNoctaliaVersion": "1.0.0",
   "author": "Dastan Medetbekov",
   "official": false,
