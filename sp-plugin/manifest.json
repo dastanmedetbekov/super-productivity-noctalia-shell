@@ -7,7 +7,7 @@
   "description": "Exposes an HTTP server to allow external Shell like Noctalia to interact with SuperProductivity tasks",
   "author": "Dastan",
   "hooks": ["taskUpdate", "currentTaskChange", "action"],
-  "permissions": ["getTasks", "showSnack"],
+  "permissions": ["getTasks", "showSnack", "updateTask", "dispatchAction"],
   "type": "standard",
   "isSkipMenuEntry": true
 }
