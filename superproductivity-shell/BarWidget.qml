@@ -5,12 +5,12 @@ import qs.Services.UI
 import qs.Widgets
 import QtQml.Models
 import QtQuick
+import QtQuick.Layouts
 
-NIconButton {
+Item {
   id: root
 
   property var pluginApi: null
-
   property ShellScreen screen
   property string widgetId: ""
   property string section: ""
@@ -21,20 +21,40 @@ NIconButton {
   property var defaults: pluginApi?.manifest?.metadata?.defaultSettings || ({})
 
   readonly property string iconColorKey: cfg.iconColor ?? defaults.iconColor
-  
   property string currentTaskText: "SuperProductivity"
 
-  icon: "check-circle"
-  tooltipText: currentTaskText
-  tooltipDirection: BarService.getTooltipDirection(screen?.name)
-  baseSize: Style.getCapsuleHeightForScreen(screen?.name)
-  applyUiScale: false
-  customRadius: Style.radiusL
-  colorBg: Style.capsuleColor
-  colorFg: Color.resolveColorKey(iconColorKey)
+  width: layout.width
+  height: Style.getCapsuleHeightForScreen(screen?.name)
 
-  border.color: Style.capsuleBorderColor
-  border.width: Style.capsuleBorderWidth
+  Row {
+      id: layout
+      height: parent.height
+      spacing: 6
+
+      NIconButton {
+          anchors.verticalCenter: parent.verticalCenter
+          icon: "check-circle"
+          tooltipText: "Click: Toggle Timer | Right-Click: Options"
+          tooltipDirection: BarService.getTooltipDirection(screen?.name)
+          baseSize: parent.height
+          applyUiScale: false
+          customRadius: Style.radiusL
+          colorBg: Style.capsuleColor
+          colorFg: Color.resolveColorKey(iconColorKey)
+          border.color: Style.capsuleBorderColor
+          border.width: Style.capsuleBorderWidth
+
+          onClicked: postAction("toggle-timer")
+          onRightClicked: PanelService.showContextMenu(contextMenu, root, screen)
+      }
+
+      Text {
+          anchors.verticalCenter: parent.verticalCenter
+          text: root.currentTaskText
+          color: "#ffffff"
+          font.pixelSize: 13
+      }
+  }
 
   Process {
       id: daemonProcess
@@ -107,10 +127,6 @@ NIconButton {
       xhr.send();
   }
 
-  onClicked: {
-      postAction("toggle-timer");
-  }
-
   NPopupContextMenu {
     id: contextMenu
 
@@ -138,7 +154,4 @@ NIconButton {
     }
   }
 
-  onRightClicked: {
-    PanelService.showContextMenu(contextMenu, root, screen);
-  }
 }
